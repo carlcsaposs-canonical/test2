@@ -1,5 +1,5 @@
 [project]
-name = "charmcraftcache"
+name = "test-pypi-test-foo"
 dynamic = ["version"]
 description = "Fast first-time builds for charmcraft"
 authors = [

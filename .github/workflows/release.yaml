@@ -4,8 +4,6 @@ name: Release to PyPI
 
 on:
   push:
-    branches:
-      - main
 
 concurrency:
   # Prevent race conditions (if multiple commits have been pushed since the last release)
@@ -15,7 +13,7 @@ concurrency:
 jobs:
   release-part1:
     name: Release to PyPI (part 1)
-    uses: canonical/data-platform-workflows/.github/workflows/release_python_package_part1.yaml@v31.1.0
+    uses: canonical/data-platform-workflows/.github/workflows/release_python_package_part1.yaml@release-latest
     permissions:
       contents: write  # Needed to create git tag
 
@@ -33,8 +31,10 @@ jobs:
         with:
           name: ${{ needs.release-part1.outputs.artifact-name }}
           path: dist/
-      - name: Publish to PyPI
+      - name: Publish to TEST PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
     permissions:
       id-token: write  # Needed for PyPI trusted publishing
 
@@ -43,7 +43,7 @@ jobs:
     needs:
       - release-part1
       - release-trusted-publishing
-    uses: canonical/data-platform-workflows/.github/workflows/release_python_package_part2.yaml@v31.1.0
+    uses: canonical/data-platform-workflows/.github/workflows/release_python_package_part2.yaml@release-latest
     with:
       git-tag: ${{ needs.release-part1.outputs.git-tag }}
     permissions:
