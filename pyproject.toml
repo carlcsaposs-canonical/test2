@@ -1,17 +1,14 @@
-[tool.poetry]
+[project]
 name = "foo"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
 readme = "README.md"
-
-[tool.poetry.dependencies]
-python = ">=3.8"
-psycopg2 = [
-    {version = ">=2.9.9", python = ">=3.8,<3.9"},
-    {version = ">=2.9.11", python = ">=3.9"}
+requires-python = ">=3.8"
+dependencies = [
+    "ops>=2.10",
+    "psycopg2>=2.9.9; python_version < '3.9'",
+    "psycopg2>=2.9.11; python_version >= '3.9'",
 ]
-ops = ">=2.10"
 
 
 
